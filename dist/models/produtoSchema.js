@@ -6,6 +6,6 @@ const ProdutoSchema = new mongoose.Schema({
     marca: { type: String },
     vendedor: { type: String },
     faixadepreco: { type: Number },
-    slug: { type: String }
+    prodslug: { type: String }
 });
 exports.default = ProdutoSchema;

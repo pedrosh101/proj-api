@@ -5,7 +5,6 @@ import Database from "./infra/db";
 import ProdutoController from "./controller/produtoController";
 
 class StartUp {
-  
   public app: express.Application;
   private _db: Database;
 
@@ -27,13 +26,10 @@ class StartUp {
       res.send({ versao: "0.0.1" });
     });
 
-    
-    this.app.route("/api/v1/produto").get(ProdutoController.get);
-    this.app.route("/api/v1/produto/:id").get(ProdutoController.getById);
-    this.app.route("/api/v1/produto").post(ProdutoController.create);
-    this.app.route("/api/v1/produto/:id").put(ProdutoController.update);
-    this.app.route("/api/v1/produto/:id").delete(ProdutoController.delete);
+    this.app.route("/api/v1/produto").get(ProdutoController.getFiltered);
     this.app.route("/api/v1/produto/:slug").get(ProdutoController.getBySlug);
+    this.app.route("/api/v1/produto").post(ProdutoController.create);
+    this.app.route("/api/v1/produto/:id").delete(ProdutoController.delete);
   }
 }
 

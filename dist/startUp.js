@@ -20,12 +20,10 @@ class StartUp {
         this.app.route("/").get((req, res) => {
             res.send({ versao: "0.0.1" });
         });
-        this.app.route("/api/v1/produto").get(produtoController_1.default.get);
-        this.app.route("/api/v1/produto/:id").get(produtoController_1.default.getById);
-        this.app.route("/api/v1/produto").post(produtoController_1.default.create);
-        this.app.route("/api/v1/produto/:id").put(produtoController_1.default.update);
-        this.app.route("/api/v1/produto/:id").delete(produtoController_1.default.delete);
+        this.app.route("/api/v1/produto").get(produtoController_1.default.getFiltered);
         this.app.route("/api/v1/produto/:slug").get(produtoController_1.default.getBySlug);
+        this.app.route("/api/v1/produto").post(produtoController_1.default.create);
+        this.app.route("/api/v1/produto/:id").delete(produtoController_1.default.delete);
     }
 }
 exports.default = new StartUp();

@@ -5,37 +5,27 @@ import * as HttpStatus from "http-status";
 import Helper from "../infra/helper";
 
 class ProdutoController {
-  get(req, res) {
-    ProdutoService.get()
+  getFiltered(req, res) {
+    const params = req.query ?? null;
+    ProdutoService.getFiltered(params)
       .then((produto) => Helper.sendResponse(res, HttpStatus.OK, produto))
       .catch((error) => console.error.bind(console, `Error ${error}`));
   }
 
-  getById(req, res) {
-    const _id = req.params.id;
-
-    ProdutoService.getById(_id)
+  getBySlug(req, res) {
+    const slug = req.params.slug;
+    ProdutoService.getBySlug(slug)
       .then((produto) => Helper.sendResponse(res, HttpStatus.OK, produto))
       .catch((error) => console.error.bind(console, `Error ${error}`));
   }
 
   create(req, res) {
-    let produto = req.body;
-
-    ProdutoService.create(produto)
+    let { produto, marca, vendedor, preco } = req.body;
+    let prodslug = slugify(`${Date.now()} ${produto}`);
+    let productinfo = { produto, marca, vendedor, preco, prodslug };
+    ProdutoService.create(productinfo)
       .then((produto) =>
-        Helper.sendResponse(res, HttpStatus.OK, "Produto cadastrado")
-      )
-      .catch((error) => console.error.bind(console, `Error ${error}`));
-  }
-
-  update(req, res) {
-    const _id = req.params.id;
-    let produto = req.body;
-
-    ProdutoService.update(_id, produto)
-      .then((produto) =>
-        Helper.sendResponse(res, HttpStatus.OK, "Produto cadastrado")
+        Helper.sendResponse(res, HttpStatus.OK, "Produto cadastrado!")
       )
       .catch((error) => console.error.bind(console, `Error ${error}`));
   }
@@ -45,13 +35,6 @@ class ProdutoController {
 
     ProdutoService.delete(_id)
       .then(() => Helper.sendResponse(res, HttpStatus.OK, "Produto cadastrado"))
-      .catch((error) => console.error.bind(console, `Error ${error}`));
-  }
-
-  getBySlug(req, res) {
-    const slug = req.params.slug;
-    ProdutoService.getBySlug(slug)
-      .then((product) => Helper.sendResponse(res, HttpStatus.OK, product))
       .catch((error) => console.error.bind(console, `Error ${error}`));
   }
 }

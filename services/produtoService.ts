@@ -1,29 +1,21 @@
 import ProdutoRepository from "../repository/produtoRepository";
 
 class ProdutoService {
-  get() {
-    return ProdutoRepository.find({});
+  getFiltered(product) {
+    return ProdutoRepository.find(product);
   }
 
-  getById(_id) {
-    return ProdutoRepository.findById(_id);
+  getBySlug(slug) {
+    return ProdutoRepository.find({ prodslug: slug });
   }
 
-  create(produto) {
-    return ProdutoRepository.create(produto);
-  }
-
-  update(_id, produto) {
-    return ProdutoRepository.findByIdAndUpdate(_id, produto);
+  create(product) {
+    return ProdutoRepository.create(product);
   }
 
   delete(_id) {
     return ProdutoRepository.findByIdAndRemove(_id);
   }
-
-  getBySlug(slug) {
-    return ProdutoRepository.find({ prodslug: slug });
-}
 }
 
 export default new ProdutoService();
